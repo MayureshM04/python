@@ -46,11 +46,9 @@ Basket_ball = {
         "turnovers_away" : [15, 11, 19, 18, 24, 20, 12, 9, 13, 21, 19, 11,\
                             13, 8, 11, 15, 8, 14, 16, 13],
         }
-
-df = pd.DataFrame(Basket_ball)
-print(df)
-
-key_1 = input("Enter the home team:")
+dataframe = pd.DataFrame(Basket_ball)
+print(dataframe)
+key_for_home_team = input("Enter the home team:")
 key2 = input("Enter the away team:")
 key3 = int(input("Enter the lower range for assists:"))#Lower range for home\
 #assists function and type casting is done
@@ -60,51 +58,52 @@ key5 = int(input("Enter the lower num _arr range:"))
 key6 = int(input("Enter the upper num_arr range:"))
 def findhometeammatches():#Visible that NBA finalists have little home game\
 #in first 20 NBA games in NBA 2015-16
-    af1 = df[df.home_team == (key_1)]
+    af1 = dataframe[dataframe.home_team == (key_for_home_team)]
     print(af1)
 def findawayteammatches():
-    af2 = df[df.away_team == (key2)]
+    af2 = dataframe[dataframe.away_team == (key2)]
     print(af2)
 def hometeampoints():
-    af3 = df[df['home_points'] >= 100]
+    af3 = dataframe[dataframe['home_points'] >= 100]
     l1 = len(af3)
     print(af3)
-    print("Number of home teams having greater than 100 point games are :", l1)    
+    print("Number of home teams having greater than 100 point games are :", l1)
 def awayteampoints():
-    af4 = df[df['away_points'] >= 100]
+    af4 = dataframe[dataframe['away_points'] >= 100]
     l2 = len(af4)
     print(af4)
     print("The number of away teams having greater than 100 point games are :", l2)
-"""
-Out of the total we see 12 out of 20 times home team has scored > 100
-Out of the total away matches 11 out of 200 times team has scored > 100 
-Hence we can conclude that there is no significant home or away advantage in NBA.
-"""
 
-v = df.min()                      #Find minimum of all the non string values
+#Out of the total we see 12 out of 20 times home team has scored > 100
+#Out of the total away matches 11 out of 200 times team has scored > 100
+#Hence we can conclude that there is no significant home or away advantage in NBA.
+v = dataframe.min()                      #Find minimum of all the non string values
 
 def meanhometeam(b):
-    b = df.mean()      #Mean is calculated for all the non string data columns
+    """Mean is calculated for all the non string data columns."""
+    b = dataframe.mean()      
     af5 = b['home_points']
-    print("The mean home team points are ", af5)        
-def number_of_assists_for_homeinrange():#Number of assists i.e. passes\
-#leading to baskets have been calculated for a range
-    z = df[df.assists_home > key3]
+    print("The mean home team points are ", af5)
+def number_of_assists_for_homeinrange():
+    """Number of assists i.e. passes\
+    leading to baskets have been calculated for a range."""
+    z = dataframe[dataframe.assists_home > key3]
     w = z[z.assists_home < key4]
     print("The team details for those teams lying in this assists range are: ")
     print(w)
 def minturnoversaway():#Turnover here refers to granting possession of the \
 #ball to the oppsition
-    af6 = min(df['turnovers_away'])
+    af6 = min(dataframe['turnovers_away'])
     print("THe minimum turnovers by an away team are: ", af6)
-    af7 = df[df['turnovers_away'] == af6]
+    af7 = dataframe[dataframe['turnovers_away'] == af6]
     print("Details of the away team giving minimum turnovers: ", af7)
 """
-Here it is interesting to note that away teams that have lesser turnovers have gone on to win the match as illustrated in this case 
+Here it is interesting to note that away teams that have lesser turnovers have\
+gone on to win the match as illustrated in this case.
 """
-u = df.to_numpy()
+u = dataframe.to_numpy()
 print(u)
-def returnnumberbasedonrowandcolumn(): 
+def returnnumberbasedonrowandcolumn():
     if key5 in range(0, 21):
         if key6 in range(0, 16):
             o = (u[key5, key6])
@@ -113,40 +112,39 @@ def returnnumberbasedonrowandcolumn():
             print("Out of bounds indexing:")
     else:
         print("Out of bounds indexing:")
-""" 
-Another method of accessing elements of the dataframe but out of bounds accessing is not cleared mentioned
-h=df.iloc[key5,key6]                   
-print(h)
-""" 
-df = df.assign(Home_Team_Status=['L', 'W', 'L', 'W', 'L', 'W', 'L', 'W', 'L',\
+#Another method of accessing elements of the dataframe but out of bounds \
+#accessing is not cleared mentioned
+#h=df.iloc[key5,key6] 
+#print(h)
+dataframe = dataframe.assign(Home_Team_Status=['L', 'W', 'L', 'W', 'L', 'W', 'L', 'W', 'L',\
                      'W', 'L', 'W', 'L', 'W', 'L', 'W', 'L', 'W', 'L', 'W'])
-def findpointsdifferential(df):
-    df = df.assign(pointsdiff=(df.home_points)-(df.away_points))
-    print(df)
-def sortbyreboundaway(df):
-    df = df.sort_values(by='rebound_away')     
-    print(df)
-
-#If we see the aboove function we understand that rebounds have cost teams games.
-#More rebounds translates to better possibility of winning the match.
-#Rebound in basketball is to try and gain ball possession once it is hits\
-#the rim or board
-
-def plotbasedongoalp(df):
-    df.plot(x='home_team', y=['threeper_home', 'field_gp_home'])
-#This plot shoes us that field goal or non 3 point shooting percentage is quite common.
-#It is the 3 point percentage that matters at times and may decide a win or a loss
+def findpointsdifferential(dataframe):
+    """Points difference in the home and away team."""
+    dataframe = dataframe.assign(pointsdiff=(dataframe.home_points)-(dataframe.away_points))
+    print(dataframe)
+def sortbyreboundaway(dataframe):
+    """If we see the aboove function we understand that rebounds have cost teams games.
+    More rebounds translates to better possibility of winning the match.
+    Rebound in basketball is to try and gain ball possession once it is hits\
+    the rim or board."""
+    dataframe = dataframe.sort_values(by='rebound_away')
+    print(dataframe)
+def plotbasedongoalp(dataframe):
+    """This plot shoes us that field goal or non 3 point shooting percentage is quite common.
+    It is the 3 point percentage that matters at times and may decide a win or a loss."""
+    dataframe.plot(x='home_team', y=['threeper_home', 'field_gp_home'])
 def writetoexcel():
-    df.to_excel('output.xlsx', sheet_name='Sheet1')
+    """ Function to write output to excel."""
+    dataframe.to_excel('output.xlsx', sheet_name='Sheet1')
 findhometeammatches()
 findawayteammatches()
 hometeampoints()
 awayteampoints()
-meanhometeam(df)
+meanhometeam(dataframe)
 number_of_assists_for_homeinrange()
 minturnoversaway()
 returnnumberbasedonrowandcolumn()
-findpointsdifferential(df)
-sortbyreboundaway(df)
-plotbasedongoalp(df)
+findpointsdifferential(dataframe)
+sortbyreboundaway(dataframe)
+plotbasedongoalp(dataframe)
 writetoexcel()

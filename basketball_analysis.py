@@ -10,7 +10,7 @@ Reference: https://github.com/ixarchakos/nba-games
 """
 
 import pandas as pd
-basketball = {
+Basket_ball = {
         "home_team" : ['ATL', 'CHI', 'GS', 'ORL', 'BOS', 'BKN', 'DET', 'MIA', \
                        'TOR', 'HOU', 'MEM', 'MIL', 'OKC', 'PHX', 'POR', 'SAC',\
                        'LAL', 'IND', 'NY', 'LAC'],
@@ -47,10 +47,10 @@ basketball = {
                             13, 8, 11, 15, 8, 14, 16, 13],
         }
 
-df = pd.DataFrame(basketball)
+df = pd.DataFrame(Basket_ball)
 print(df)
 
-key1 = input("Enter the home team:")
+key_1 = input("Enter the home team:")
 key2 = input("Enter the away team:")
 key3 = int(input("Enter the lower range for assists:"))#Lower range for home\
 #assists function and type casting is done
@@ -60,7 +60,7 @@ key5 = int(input("Enter the lower num _arr range:"))
 key6 = int(input("Enter the upper num_arr range:"))
 def findhometeammatches():#Visible that NBA finalists have little home game\
 #in first 20 NBA games in NBA 2015-16
-    af1 = df[df.home_team == (key1)]
+    af1 = df[df.home_team == (key_1)]
     print(af1)
 def findawayteammatches():
     af2 = df[df.away_team == (key2)]
@@ -87,7 +87,7 @@ def meanhometeam(b):
     b = df.mean()      #Mean is calculated for all the non string data columns
     af5 = b['home_points']
     print("The mean home team points are ", af5)        
-def numberofassistsforhomeinrange():#Number of assists i.e. passes\
+def number_of_assists_for_homeinrange():#Number of assists i.e. passes\
 #leading to baskets have been calculated for a range
     z = df[df.assists_home > key3]
     w = z[z.assists_home < key4]
@@ -126,52 +126,27 @@ def findpointsdifferential(df):
 def sortbyreboundaway(df):
     df = df.sort_values(by='rebound_away')     
     print(df)
-"""
-If we see the aboove function we understand that rebounds have cost teams games.
-More rebounds translates to better possibility of winning the match.
-Rebound in basketball is to try and gain ball possession once it is hits the rim or board
-"""
-def plotbasedongoalp(df):
-    df.plot(x = 'home_team', y = ['threeper_home','field_gp_home'])
 
+#If we see the aboove function we understand that rebounds have cost teams games.
+#More rebounds translates to better possibility of winning the match.
+#Rebound in basketball is to try and gain ball possession once it is hits\
+#the rim or board
+
+def plotbasedongoalp(df):
+    df.plot(x='home_team', y=['threeper_home', 'field_gp_home'])
 #This plot shoes us that field goal or non 3 point shooting percentage is quite common.
 #It is the 3 point percentage that matters at times and may decide a win or a loss
-
 def writetoexcel():
-    df.to_excel('output.xlsx', sheet_name='Sheet1')       
-              
-findhometeammatches()                
+    df.to_excel('output.xlsx', sheet_name='Sheet1')
+findhometeammatches()
 findawayteammatches()
 hometeampoints()
 awayteampoints()
 meanhometeam(df)
-numberofassistsforhomeinrange()
+number_of_assists_for_homeinrange()
 minturnoversaway()
 returnnumberbasedonrowandcolumn()
 findpointsdifferential(df)
 sortbyreboundaway(df)
 plotbasedongoalp(df)
 writetoexcel()
-
-
-
-      
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
